@@ -1,20 +1,44 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { createDrawerNavigator } from "@react-navigation/drawer";
+import HomeScreen from "./Screens/HomeScreen";
+import ProfileScreen from "./Screens/ProfileScreen";
+import UserScreen from "./Screens/UserScreen";
 
+const Stack = createNativeStackNavigator();
+const Drawer = createDrawerNavigator();
+const StackNav = () => {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: "orange",
+        },
+        headerTintColor: "white",
+      }}
+    >
+      <Stack.Screen name="Home" component={HomeScreen} />
+      <Stack.Screen name="Profile" component={ProfileScreen} />
+      <Stack.Screen name="User" component={UserScreen} />
+    </Stack.Navigator>
+  );
+};
+
+const DrawerNav = () => {
+  return (
+    <Drawer.Navigator>
+      <Drawer.Screen name="Home" component={HomeScreen} />
+      <Drawer.Screen name="Profile" component={ProfileScreen} />
+      <Drawer.Screen name="User" component={UserScreen} />
+    </Drawer.Navigator>
+  );
+};
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer>
+      {/* Use either StackNavigator or DrawerNavigator */}
+      <StackNav />
+      {/* <DrawerNav /> */}
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
