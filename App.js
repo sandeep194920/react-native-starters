@@ -10,6 +10,9 @@ import ProfileScreen from "./Screens/ProfileScreen";
 import UserScreen from "./Screens/UserScreen";
 import Icon from "react-native-vector-icons/Entypo";
 import DrawerContent from "./DrawerContent";
+import Login from "./Screens/Login&Register/Login";
+import Register from "./Screens/Login&Register/Register";
+
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
 const StackNav = () => {
@@ -55,11 +58,19 @@ const DrawerNav = () => {
   );
 };
 export default function App() {
+  const Stack = createNativeStackNavigator();
+
   return (
+    // <NavigationContainer>
+    //   {/* Use either StackNavigator or DrawerNavigator */}
+    //   {/* <StackNav /> */}
+    //   <DrawerNav />
+    // </NavigationContainer>
     <NavigationContainer>
-      {/* Use either StackNavigator or DrawerNavigator */}
-      {/* <StackNav /> */}
-      <DrawerNav />
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="Login" component={Login} />
+        <Stack.Screen name="Register" component={Register} />
+      </Stack.Navigator>
     </NavigationContainer>
   );
 }
