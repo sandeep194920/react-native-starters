@@ -26,10 +26,12 @@ const StackNav = () => {
 
 const DrawerNav = () => {
   return (
-    <Drawer.Navigator>
-      <Drawer.Screen name="Home" component={HomeScreen} />
-      <Drawer.Screen name="Profile" component={ProfileScreen} />
-      <Drawer.Screen name="User" component={UserScreen} />
+    <Drawer.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <Drawer.Screen name="Home" component={StackNav} />
     </Drawer.Navigator>
   );
 };
@@ -37,8 +39,8 @@ export default function App() {
   return (
     <NavigationContainer>
       {/* Use either StackNavigator or DrawerNavigator */}
-      <StackNav />
-      {/* <DrawerNav /> */}
+      {/* <StackNav /> */}
+      <DrawerNav />
     </NavigationContainer>
   );
 }
