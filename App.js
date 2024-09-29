@@ -9,6 +9,7 @@ import HomeScreen from "./Screens/HomeScreen";
 import ProfileScreen from "./Screens/ProfileScreen";
 import UserScreen from "./Screens/UserScreen";
 import Icon from "react-native-vector-icons/Entypo";
+import DrawerContent from "./DrawerContent";
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
 const StackNav = () => {
@@ -42,6 +43,7 @@ const StackNav = () => {
 const DrawerNav = () => {
   return (
     <Drawer.Navigator
+      drawerContent={DrawerContent}
       screenOptions={{
         headerShown: false,
       }}
