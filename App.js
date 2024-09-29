@@ -1,13 +1,18 @@
-import { NavigationContainer } from "@react-navigation/native";
+import {
+  NavigationContainer,
+  useNavigation,
+  DrawerActions,
+} from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import HomeScreen from "./Screens/HomeScreen";
 import ProfileScreen from "./Screens/ProfileScreen";
 import UserScreen from "./Screens/UserScreen";
-
+import Icon from "react-native-vector-icons/Entypo";
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
 const StackNav = () => {
+  const navigation = useNavigation();
   return (
     <Stack.Navigator
       screenOptions={{
@@ -15,6 +20,16 @@ const StackNav = () => {
           backgroundColor: "orange",
         },
         headerTintColor: "white",
+        headerLeft: () => {
+          return (
+            <Icon
+              name="menu"
+              size={30}
+              color="white"
+              onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
+            />
+          );
+        },
       }}
     >
       <Stack.Screen name="Home" component={HomeScreen} />
