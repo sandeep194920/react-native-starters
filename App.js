@@ -15,25 +15,27 @@ const Drawer = createDrawerNavigator();
 const StackNav = () => {
   const navigation = useNavigation();
   return (
-    <Stack.Navigator
-      screenOptions={{
-        headerStyle: {
-          backgroundColor: "orange",
-        },
-        headerTintColor: "white",
-        headerLeft: () => {
-          return (
-            <Icon
-              name="menu"
-              size={30}
-              color="white"
-              onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
-            />
-          );
-        },
-      }}
-    >
-      <Stack.Screen name="Home" component={HomeScreen} />
+    <Stack.Navigator>
+      <Stack.Screen
+        name="Home"
+        component={HomeScreen}
+        options={{
+          headerStyle: {
+            backgroundColor: "orange",
+          },
+          headerTintColor: "white",
+          headerLeft: () => {
+            return (
+              <Icon
+                name="menu"
+                size={30}
+                color="white"
+                onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
+              />
+            );
+          },
+        }}
+      />
       <Stack.Screen name="Profile" component={ProfileScreen} />
       <Stack.Screen name="User" component={UserScreen} />
     </Stack.Navigator>
@@ -43,7 +45,7 @@ const StackNav = () => {
 const DrawerNav = () => {
   return (
     <Drawer.Navigator
-      drawerContent={DrawerContent}
+      drawerContent={(props) => <DrawerContent {...props} />}
       screenOptions={{
         headerShown: false,
       }}
