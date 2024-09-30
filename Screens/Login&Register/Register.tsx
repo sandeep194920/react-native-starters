@@ -13,6 +13,8 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 import Fontisto from "react-native-vector-icons/Fontisto";
 import Error from "react-native-vector-icons/MaterialIcons";
 import { useState } from "react";
+import axios from "axios";
+import { Alert } from "react-native";
 
 function RegisterPage({ props }) {
   const [name, setName] = useState("");
@@ -63,6 +65,34 @@ function RegisterPage({ props }) {
       setPasswordVerify(true);
     }
   }
+
+  const handleSubmit = async () => {
+    try {
+      const userData = {
+        name,
+        email,
+        mobile,
+        password,
+      };
+
+      if (nameVerify && emailVerify && mobileVerify && passwordVerify) {
+        const { data } = await axios.post(
+          "http://192.168.29.210:5001/register",
+          userData
+        );
+        if (data.status === "ok") {
+          Alert.alert("Registered Successfully");
+          // @ts-expect-error
+          navigation.navigate("Login");
+        } else {
+          Alert.alert(data.data);
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <ScrollView
       contentContainerStyle={{ flexGrow: 1 }}
@@ -201,7 +231,10 @@ function RegisterPage({ props }) {
           )}
         </View>
         <View style={styles.button}>
-          <TouchableOpacity style={[styles.inBut, { marginVertical: 20 }]}>
+          <TouchableOpacity
+            onPress={handleSubmit}
+            style={[styles.inBut, { marginVertical: 20 }]}
+          >
             <View>
               <Text style={styles.textSign}>Register</Text>
             </View>
