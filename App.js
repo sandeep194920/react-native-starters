@@ -12,6 +12,8 @@ import Icon from "react-native-vector-icons/Entypo";
 import DrawerContent from "./DrawerContent";
 import Login from "./Screens/Login&Register/Login";
 import Register from "./Screens/Login&Register/Register";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useEffect, useState } from "react";
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -45,6 +47,7 @@ const StackNav = () => {
         initialParams={{ name: "Sandeep" }} // incase you want to give initial parameters as props
       />
       <Stack.Screen name="User" component={UserScreen} />
+      <Stack.Screen name="LoginNav" component={LoginNav} />
     </Stack.Navigator>
   );
 };
@@ -61,8 +64,32 @@ const DrawerNav = () => {
     </Drawer.Navigator>
   );
 };
-export default function App() {
+
+const LoginNav = () => {
   const Stack = createNativeStackNavigator();
+
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="Login" component={Login} />
+      <Stack.Screen name="Register" component={Register} />
+      <Stack.Screen name="Main" component={DrawerNav} />
+    </Stack.Navigator>
+  );
+};
+export default function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const getData = async () => {
+    const data = await AsyncStorage.getItem("isLoggedIn");
+    console.log("The data of logged in is", data);
+    setIsLoggedIn(data);
+  };
+
+  useEffect(() => {
+    getData();
+  }, [isLoggedIn]);
+
+  console.log("Is logged in ", isLoggedIn);
 
   return (
     // <NavigationContainer>
@@ -71,11 +98,7 @@ export default function App() {
     //   <DrawerNav />
     // </NavigationContainer>
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="Login" component={Login} />
-        <Stack.Screen name="Register" component={Register} />
-        <Stack.Screen name="Main" component={DrawerNav} />
-      </Stack.Navigator>
+      {isLoggedIn ? <DrawerNav /> : <LoginNav />}
     </NavigationContainer>
   );
 }

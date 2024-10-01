@@ -30,7 +30,8 @@ function LoginPage({ props }) {
 
         // Store the given token by BE in async storage so that we can send the token when we call other endpoints
         AsyncStorage.setItem("token", data.data);
-        console.log("The token received in login is", data.data);
+        AsyncStorage.setItem("isLoggedIn", JSON.stringify(true));
+
         // @ts-expect-error
         navigation.navigate("Main");
       }
