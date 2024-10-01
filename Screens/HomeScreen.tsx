@@ -1,8 +1,10 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { DrawerActions } from "@react-navigation/native";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
+  Alert,
+  BackHandler,
   Button,
   ScrollView,
   StyleSheet,
@@ -36,7 +38,40 @@ export default function HomeScreen(props) {
       setUserData(response.data.data);
     };
     getData();
+
+    // When user clicks back button in home screen after logging in, we should not show login screen. Instead we should exit the app/show alert
   }, []);
+
+  // Use focus effect - the code inside it works only when this screen is active. Backhandler should
+  // exit our app only from this screen and not in any other screen. TODO: Do the same thing for login screen
+  useFocusEffect(() => {
+    // useCallback(() => {
+    BackHandler.addEventListener("hardwareBackPress", hardwareBackPressHandler);
+
+    return () => {
+      BackHandler.removeEventListener(
+        "hardwareBackPress",
+        hardwareBackPressHandler
+      );
+    };
+    // });
+  });
+
+  const hardwareBackPressHandler = () => {
+    Alert.alert("Exit App?", "Are you sure you want to exit the app?", [
+      {
+        text: "Cancel",
+        onPress: () => null,
+        style: "cancel",
+      },
+      {
+        text: "Exit",
+        onPress: () => BackHandler.exitApp(),
+        style: "destructive",
+      },
+    ]);
+    return true;
+  };
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
