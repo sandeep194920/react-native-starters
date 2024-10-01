@@ -47,7 +47,7 @@ function DrawerContent(props) {
     AsyncStorage.setItem("token", "");
     AsyncStorage.setItem("isLoggedIn", "");
     // @ts-expect-error
-    navigation.navigate("LoginNav");
+    navigation.navigate("Login");
   };
   return (
     <View style={{ flex: 1 }}>

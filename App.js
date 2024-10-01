@@ -47,7 +47,11 @@ const StackNav = () => {
         initialParams={{ name: "Sandeep" }} // incase you want to give initial parameters as props
       />
       <Stack.Screen name="User" component={UserScreen} />
-      <Stack.Screen name="LoginNav" component={LoginNav} />
+      <Stack.Screen
+        screenOptions={{ headerShown: false }}
+        name="Login"
+        component={LoginNav}
+      />
     </Stack.Navigator>
   );
 };
