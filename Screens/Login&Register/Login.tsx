@@ -9,13 +9,38 @@ import { useNavigation } from "@react-navigation/native";
 import styles from "./style";
 import Feather from "react-native-vector-icons/Feather";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
-import { SafeAreaView } from "react-native";
+import { Alert, SafeAreaView } from "react-native";
+import { useState } from "react";
+import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 function LoginPage({ props }) {
   const navigation = useNavigation();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleLogin = async () => {
+    const { data } = await axios.post("http://192.168.29.210:5001/login-user", {
+      email,
+      password,
+    });
+    try {
+      if (data.status === "ok") {
+        Alert.alert("Login succesful");
+
+        // Store the given token by BE in async storage so that we can send the token when we call other endpoints
+        AsyncStorage.setItem("token", data.data);
+        console.log("The token received in login is", data.data);
+        // @ts-expect-error
+        navigation.navigate("Main");
+      }
+    } catch (error) {
+      console.log("Error", error);
+    }
+  };
   return (
     <SafeAreaView style={{ backgroundColor: "white" }}>
-      <View style={styles.logoContainer}>
+      <View style={styles.logoContainer} keyboardShouldPersistTap={"always"}>
         <Image
           style={styles.logo}
           source={require("../../assets/mainLogo.png")}
@@ -25,11 +50,19 @@ function LoginPage({ props }) {
         <Text style={styles.text_header}>Login !!!</Text>
         <View style={styles.action}>
           <FontAwesome name="user-o" color="#420475" style={styles.smallIcon} />
-          <TextInput placeholder="Mobile or Email" style={styles.textInput} />
+          <TextInput
+            onChangeText={setEmail}
+            placeholder="Mobile or Email"
+            style={styles.textInput}
+          />
         </View>
         <View style={styles.action}>
           <FontAwesome name="lock" color="#420475" style={styles.smallIcon} />
-          <TextInput placeholder="Password" style={styles.textInput} />
+          <TextInput
+            onChangeText={setPassword}
+            placeholder="Password"
+            style={styles.textInput}
+          />
         </View>
         <View
           style={{
@@ -45,7 +78,7 @@ function LoginPage({ props }) {
         </View>
       </View>
       <View style={styles.button}>
-        <TouchableOpacity style={styles.inBut}>
+        <TouchableOpacity style={styles.inBut} onPress={() => handleLogin()}>
           <View>
             <Text style={styles.textSign}>Log in</Text>
           </View>

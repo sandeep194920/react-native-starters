@@ -39,7 +39,11 @@ const StackNav = () => {
           },
         }}
       />
-      <Stack.Screen name="Profile" component={ProfileScreen} />
+      <Stack.Screen
+        name="Profile"
+        component={ProfileScreen}
+        initialParams={{ name: "Sandeep" }} // incase you want to give initial parameters as props
+      />
       <Stack.Screen name="User" component={UserScreen} />
     </Stack.Navigator>
   );
@@ -53,7 +57,7 @@ const DrawerNav = () => {
         headerShown: false,
       }}
     >
-      <Drawer.Screen name="Home" component={StackNav} />
+      <Drawer.Screen name="DrawerHome" component={StackNav} />
     </Drawer.Navigator>
   );
 };
@@ -70,6 +74,7 @@ export default function App() {
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Register" component={Register} />
+        <Stack.Screen name="Main" component={DrawerNav} />
       </Stack.Navigator>
     </NavigationContainer>
   );
