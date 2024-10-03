@@ -1,16 +1,13 @@
-### Starter Project React-Native
+### Starter Project React-Native using Expo.
 
-This is a react-native expo starter project.
+This is a react-native expo starter project. Here, I show Drawer Navigator combined with Stack Navigator.
 
 #### Details
 
-- Created this project using expo-blank template. This template is available in [Learn section](https://docs.expo.dev/tutorial/create-your-first-app/), but if you use expo command directly like this `npx create-expo-app@latest` as given in the [doc's first page](https://docs.expo.dev/), then you will get expo-router by default.
+- Created this project using `npx create-expo-app@latest` as given in the [doc's first page](https://docs.expo.dev/), then you will get expo-router by default.
 
-In this project, I am using blank template as I wanted to use [React-navigation](https://reactnavigation.org/) package for routing.
+- Expo-router uses react-navigation under the hood, but I have just used expo-router directly by referring the docs, and haven't used react-navigation directly.
 
-Created the app using `npx create-expo-app Test-app --template blank`
+NOTE: In the expo documentation, there's a setup for [nesting navigators that shows an example of using Stack-Navigator with Tab-Navigator](https://docs.expo.dev/router/advanced/nesting-navigators/). I wanted to use Drawer-Navigator with Stack-Navigator, so after some trial and error I found this setup that I show in this repo. [I have also answered a question about this on github forum here](https://github.com/expo/router/discussions/715#discussioncomment-10827158).
 
-- Then followed the playlist until specified video below.
-- In this branch, I created native-stack-navigator and Drawer-stack-navigator.
-
-Reference - [Youtube Playlist](https://www.youtube.com/playlist?list=PLS3Cbnye46msryIoZjQ5AQ57nxENwnJfl) - [Until this video](https://www.youtube.com/watch?v=bnRIvh6NVqA&list=PLS3Cbnye46msryIoZjQ5AQ57nxENwnJfl&index=8)
+Reference - [Expo Router Documentation](https://docs.expo.dev/router/introduction/).
